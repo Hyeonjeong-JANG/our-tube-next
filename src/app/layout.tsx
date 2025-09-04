@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {Inter} from "next/font/google";
 import "./globals.css";
+import {ClerkProvider} from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,12 +16,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={inter.className}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider afterSignOutUrl="/">
+      {/* afterSignOutUrl="/" 을 해서 로그아웃을 하면 항상 루트 페이지로 이동하게 한다. */}
+      <html lang="en">
+        <body
+          className={inter.className}
+        >
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>    
   );
 }
