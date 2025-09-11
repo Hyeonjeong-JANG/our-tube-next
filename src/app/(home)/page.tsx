@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
 export default async function Home() {
-  void trpc.hello.prefetch({ text: "Hana" });
+  void trpc.categories.getMany.prefetch();
   // src/app/(home)/client.tsx의 useSuspenseQuery와 쌍을 이룸
 
   return (
