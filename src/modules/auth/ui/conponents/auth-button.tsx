@@ -2,14 +2,24 @@
 
 import { Button } from "@/components/ui/button";
 import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
-import { UserCircleIcon } from "lucide-react";
+import { ClapperboardIcon, UserCircleIcon } from "lucide-react";
 
 export const AuthButton = () => {
     return (
         <>
             <SignedIn>
-                <UserButton />
-                {/* TODO: 스튜디오와 유저 프로필에 대한 메뉴 아이템 추가하기 */}
+                <UserButton>
+                    <UserButton.MenuItems>
+                        {/* TODO: 유저 프로필 메뉴 버튼 추가하기 */}
+                        <UserButton.Link
+                            label="Studio"
+                            href="/studio"
+                            labelIcon={<ClapperboardIcon className="size-4" />}
+                        >
+
+                        </UserButton.Link>
+                    </UserButton.MenuItems>
+                </UserButton>
             </SignedIn>
             <SignedOut>
                 <SignInButton mode="modal">
