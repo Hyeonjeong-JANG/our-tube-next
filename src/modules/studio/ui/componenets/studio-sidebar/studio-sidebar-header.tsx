@@ -1,4 +1,4 @@
-import { SidebarHeader } from "@/components/ui/sidebar";
+import { SidebarHeader, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { UserAvatar } from "@/components/user-avatar";
 import { useUser } from "@clerk/nextjs";
@@ -6,6 +6,7 @@ import Link from "next/link";
 
 export const StudioSidebarHeader = () => {
     const { user } = useUser();
+    const { state } = useSidebar();
 
     if (!user) return (
         <SidebarHeader className="flex items-center justify-center pb-4">
@@ -16,6 +17,23 @@ export const StudioSidebarHeader = () => {
             </div>
         </SidebarHeader>
     );
+
+    // TODO: collapsed 일 때 li 스타일 없애기
+    if (state === "collapsed") {
+        return (
+            <SidebarMenuItem>
+                <SidebarMenuButton tooltip="Your profile" asChild>
+                    <Link href="/users/current">
+                        <UserAvatar
+                            imageUrl={user?.imageUrl}
+                            name={user.fullName ?? "User"}
+                            size="xs"
+                        />
+                        <span className="text-sm"> Your profile</span></Link>
+                </SidebarMenuButton>
+            </SidebarMenuItem >
+        );
+    }
 
     return (
         <SidebarHeader className="flex items-center justify-center pb-4">
