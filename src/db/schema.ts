@@ -11,6 +11,11 @@ export const users = pgTable("users", {
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
 }, (t) => [uniqueIndex("clerk_id_idx").on(t.clerkId)]); // clerk_id에 unique 인덱스 추가했기 때문에 더 빠르게 쿼리할 수 있다
 
+export const userRelations = relations(users, ({ many }) => ({
+    videos: many(videos),
+
+}));
+
 export const categories = pgTable("categories", {
     id: uuid("id").primaryKey().defaultRandom(),
     name: text("name").notNull().unique(),
@@ -26,13 +31,20 @@ export const videos = pgTable("videos", {
     userId: uuid("user_id").references(() => users.id, {
         onDelete: "cascade",
     }).notNull(),
+    categoryId: uuid("category_id").references(() => categories.id, {
+        onDelete: "set null",
+    }),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const videoRelations = relations(videos, ({ one }) => ({
-    users: one(users, {
-        fields: [videos.userId],
-        references: [users.id],
-    }),
-}));
+// export const videoRelations = relations(videos, ({ one }) => ({
+//     users: one(users, {
+//         fields: [videos.userId],
+//         references: [users.id],
+//     }),
+//     categories: one(categories, {
+//         fields: [videos.categoryId],
+//         references: [categories.id],
+//     }),
+// }));
