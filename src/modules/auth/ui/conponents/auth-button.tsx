@@ -18,6 +18,7 @@ export const AuthButton = () => {
                         >
 
                         </UserButton.Link>
+                        <UserButton.Action label="manageAccount"/>
                     </UserButton.MenuItems>
                 </UserButton>
             </SignedIn>

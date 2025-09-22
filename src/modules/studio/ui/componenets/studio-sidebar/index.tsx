@@ -14,8 +14,6 @@ import {
 } from "@/components/ui/sidebar";
 import { StudioSidebarHeader } from "./studio-sidebar-header";
 
-
-
 export const StudioSidebar = () => {
     const pathname = usePathname();
 
