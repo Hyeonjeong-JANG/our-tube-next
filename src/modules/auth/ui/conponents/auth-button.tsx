@@ -32,7 +32,6 @@ export const AuthButton = () => {
                         Sign in
                     </Button>
                 </SignInButton>
-
             </SignedOut>
 
         </>
