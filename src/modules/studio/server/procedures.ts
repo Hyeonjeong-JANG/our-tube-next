@@ -1,11 +1,63 @@
+import { z } from "zod";
 import { db } from "@/db";
 import { videos } from "@/db/schema";
 import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
+import { eq, and, or, lt, desc } from "drizzle-orm";
 
 export const studioRouter = createTRPCRouter({
-  getMany: protectedProcedure.query(async () => {
-    const data = await db.select().from(videos);
+  getMany: protectedProcedure
+    .input(
+      z.object({
+        cursor: z
+          .object({
+            id: z.string().uuid(),
+            updatedAt: z.date(),
+          })
+          .nullish(),
+        limit: z.number().min(1).max(100),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { cursor, limit } = input;
+      const { id: userId } = ctx.user;
+      const data = await db
+        .select()
+        .from(videos)
+        .where(
+          and(
+            eq(videos.userId, userId),
+            cursor
+              ? or(
+                  lt(videos.updatedAt, cursor.updatedAt),
+                  and(
+                    eq(videos.updatedAt, cursor.updatedAt),
+                    lt(videos.id, cursor.id)
+                  )
+                )
+              : undefined
+          )
+        )
+        .orderBy(desc(videos.updatedAt), desc(videos.id))
+        // 프론트엔드가 요청한 것보다 하나 더 확인하여 다음 배치에 추가할 것이 있나 체크하는 것임
+        .limit(limit + 1);
 
-    return data;
-  }),
+      const hasMore = data.length > limit;
+
+      // 데이터가 하나 더 있을 경우 마지막 항목을 제거
+      const items = hasMore ? data.slice(0, -1) : data;
+      const lastItem = items[items.length - 1];
+
+      // 데이터가 더 있다면 다음 커서를 마지막 아이템으로 함
+      const nextCursor = hasMore
+        ? {
+            id: lastItem.id,
+            updatedAt: lastItem.updatedAt,
+          }
+        : null;
+
+      return {
+        items,
+        nextCursor,
+      };
+    }),
 });
