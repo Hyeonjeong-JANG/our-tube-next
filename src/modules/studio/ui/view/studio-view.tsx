@@ -1,9 +1,9 @@
-import { VideoSection } from "../sections/videos-section";
+import { VideoSectionSuspense } from "../sections/videos-section";
 
 export const StudioView = () => {
   return (
     <div>
-      <VideoSection />
+      <VideoSectionSuspense />
     </div>
   );
 };
