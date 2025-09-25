@@ -4,6 +4,7 @@ import { Loader2Icon, PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trpc } from "@/trpc/client";
 import { toast } from "sonner";
+import { ResponsiveModal } from "@/components/responsive-modal";
 
 export const StudioUploadModal = () => {
   const utils = trpc.useUtils();
@@ -18,17 +19,27 @@ export const StudioUploadModal = () => {
   });
 
   return (
-    <Button
-      variant="secondary"
-      onClick={() => create.mutate()}
-      disabled={create.isPending}
-    >
-      {create.isPending ? (
-        <Loader2Icon className="animate-spin" />
-      ) : (
-        <PlusIcon />
-      )}
-      Create
-    </Button>
+    <>
+      {/* !!: 값을 명시적으로 불리언(Boolean) 타입으로 변환하기 위해 !!를 사용 */}
+      <ResponsiveModal
+        title="Upload a video"
+        open={!!create.data}
+        onOpenChange={() => create.reset()}
+      >
+        <p>This will be an uploader</p>
+      </ResponsiveModal>
+      <Button
+        variant="secondary"
+        onClick={() => create.mutate()}
+        disabled={create.isPending}
+      >
+        {create.isPending ? (
+          <Loader2Icon className="animate-spin" />
+        ) : (
+          <PlusIcon />
+        )}
+        Create
+      </Button>
+    </>
   );
 };
