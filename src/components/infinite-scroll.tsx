@@ -34,14 +34,19 @@ export const InfiniteScroll = ({
   return (
     <div className="flex flex-col items-center gap-4 p-4">
       <div ref={targetRef} className="h-1">
-        {hasNextPage?(
-            <Button
+        {hasNextPage ? (
+          <Button
             variant="secondary"
-            disabled={!hasNextPage || isFetchingNextPage} 
+            disabled={!hasNextPage || isFetchingNextPage}
             // intersectionObserver가 어떤 이유에서든 제대로 작동하지 않을 때 작동시키기 위함이다
-            onClick={()=>fetchNextPage()}>
-                {isFetchingNextPage?"Loading...":"Load more"}
-            </Button>
+            onClick={() => fetchNextPage()}
+          >
+            {isFetchingNextPage ? "Loading..." : "Load more"}
+          </Button>
+        ) : (
+          <p className="text-xs text-muted-foreground">
+            더이상 데이터가 없습니다.
+          </p>
         )}
       </div>
     </div>
