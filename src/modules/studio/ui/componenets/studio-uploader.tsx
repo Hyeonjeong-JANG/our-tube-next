@@ -21,6 +21,7 @@ export const StudioUploader = ({
   return (
     <div>
       <MuxUploader
+        onSuccess={onSuccess}
         endpoint={endpoint}
         id={UPLOADER_ID}
         className="hidden group/uploader"
@@ -45,8 +46,16 @@ export const StudioUploader = ({
         </div>
         <span slot="separator" className="hidden" />
         <MuxUploaderStatus muxUploader={UPLOADER_ID} className="text-sm" />
-        <MuxUploaderProgress muxUploader={UPLOADER_ID} className="text-sm" type="percentage"/>
-        <MuxUploaderProgress  muxUploader={UPLOADER_ID} className="text-sm" type="bar"/>
+        <MuxUploaderProgress
+          muxUploader={UPLOADER_ID}
+          className="text-sm"
+          type="percentage"
+        />
+        <MuxUploaderProgress
+          muxUploader={UPLOADER_ID}
+          className="text-sm"
+          type="bar"
+        />
       </MuxUploaderDrop>
     </div>
   );
