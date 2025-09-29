@@ -45,7 +45,7 @@ export const InfiniteScroll = ({
           </Button>
         ) : (
           <p className="text-xs text-muted-foreground">
-            더이상 데이터가 없습니다.
+            You have reached the end of the list
           </p>
         )}
       </div>

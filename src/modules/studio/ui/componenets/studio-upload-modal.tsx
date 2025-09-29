@@ -11,11 +11,11 @@ export const StudioUploadModal = () => {
   const utils = trpc.useUtils();
   const create = trpc.videos.create.useMutation({
     onSuccess: () => {
-      toast.success("비디오가 생성되었습니다");
+      toast.success("Video created");
       utils.studio.getMany.invalidate();
     },
     onError: (error) => {
-      toast.error("무언가 잘못되었군요...🤔");
+      toast.error("Is something wrong...🤔");
     },
   });
 
