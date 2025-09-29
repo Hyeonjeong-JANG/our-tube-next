@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev:all": "concurrently \"bun run dev:webhook\" \"bun run dev\"",
+    "dev:all": "concurrently \"npm run dev:webhook\" \"npm run dev\"",
     "dev": "next dev",
     "dev:webhook": "ngrok http --url=maximum-ample-hawk.ngrok-free.app 3000",
     "build": "next build",
