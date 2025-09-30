@@ -14,6 +14,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
+import { VideoThumbnail } from "@/modules/videos/ui/components/video-thumbnail";
 
 export const VideoSection = () => {
   return (
@@ -60,7 +61,13 @@ export const VideosSectionSuspense = () => {
                   legacyBehavior
                 >
                   <TableRow className="cursor-pointer">
-                    <TableCell>{video.title}</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-4">
+                        <div className="relative aspect-video w-36 shrink-0">
+                          <VideoThumbnail imageUrl={video.previewUrl} />
+                        </div>
+                      </div>
+                    </TableCell>
                     <TableCell>visiblity</TableCell>
                     <TableCell>status</TableCell>
                     <TableCell>date</TableCell>
