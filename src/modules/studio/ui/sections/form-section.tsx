@@ -140,7 +140,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem
                   onClick={() => remove.mutate({ id: videoId })}
-                  className="flex items-center"
+                  className="flex items-center p-2 hover:cursor-pointer"
                 >
                   <TrashIcon className="size-4 mr-2" />
                   Delete
