@@ -152,7 +152,7 @@ export const VideosSectionSuspense = () => {
                     </TableCell>
                     <TableCell>
                       <div className="flex items-center">
-                        {snakeCaseToTitle(video.muxStatus || "error")}
+                        {snakeCaseToTitle(video.muxStatus || "error")} 
                       </div>
                     </TableCell>
                     <TableCell className="text-sm truncate">
