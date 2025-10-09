@@ -1,1 +1,1 @@
-export const THUMBNAIL_FALLBACK = "/paleholder.svg";
+export const THUMBNAIL_FALLBACK = "/placeholder.svg";
