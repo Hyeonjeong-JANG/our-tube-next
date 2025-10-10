@@ -80,6 +80,8 @@ export const POST = async (request: Request) => {
       const duration = data.duration ? Math.round(data.duration * 1000) : 0;
 
       const utapi = new UTApi();
+
+
       const [uploadedThumbnail, uploadedPreview] =
         await utapi.uploadFilesFromUrl([tempThumbnailUrl, tempPreviewUrl]);
 
