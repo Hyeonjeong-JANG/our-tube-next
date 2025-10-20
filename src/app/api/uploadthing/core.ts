@@ -42,6 +42,7 @@ export const ourFileRouter = {
 
       if (!existingVideo) throw new UploadThingError("Not found");
 
+      // 이미 썸네일이 있는 경우에는 기존 썸네일을 삭제하고 DB에서 제거
       if (existingVideo.thumbnailKey) {
         const utapi = new UTApi();
 
