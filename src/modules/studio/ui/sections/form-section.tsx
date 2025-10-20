@@ -89,7 +89,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
       toast.success("Video updated");
     },
     onError: () => {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong(update)");
     },
   });
 
@@ -100,7 +100,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
       router.push("/studio");
     },
     onError: () => {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong(remove)");
     },
   });
 
@@ -112,7 +112,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
       toast.success("Thumbnail restored");
     },
     onError: () => {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong(restoreThumbnail)");
     },
   });
 

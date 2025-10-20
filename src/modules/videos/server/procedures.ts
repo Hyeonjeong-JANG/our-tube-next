@@ -43,7 +43,7 @@ export const videosRouter = createTRPCRouter({
       const uploadedThumbnail = await utapi.uploadFilesFromUrl(
         tempThumbnailUrl
       );
-
+ 
       if (!uploadedThumbnail.data) {
         throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" });
       }

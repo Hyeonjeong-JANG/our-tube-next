@@ -17,7 +17,7 @@ export const StudioUploadModal = () => {
       utils.studio.getMany.invalidate();
     },
     onError: (error) => {
-      toast.error("Something went wrong...🤔");
+      toast.error("Something went wrong(create)");
     },
   });
 
