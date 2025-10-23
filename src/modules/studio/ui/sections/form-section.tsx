@@ -111,7 +111,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
       });
     },
     onError: () => {
-      toast.error("Something went wrong(restoreThumbnail)");
+      toast.error("Something went wrong(generateThumbnail)");
     },
   });
 
@@ -263,7 +263,12 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                               <ImagePlusIcon className="size-4 mr-1" />
                               Change
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={()=>generateThumbnail.mutate()} className="flex items-center px-2 py-1 hover:cursor-pointer">
+                            <DropdownMenuItem
+                              onClick={() =>
+                                generateThumbnail.mutate({ id: videoId })
+                              }
+                              className="flex items-center px-2 py-1 hover:cursor-pointer"
+                            >
                               <SparklesIcon className="size-4 mr-1" />
                               AI-generated
                             </DropdownMenuItem>

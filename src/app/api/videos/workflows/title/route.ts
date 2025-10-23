@@ -13,26 +13,28 @@ interface InputType {
 export const { POST } = serve(async (context) => {
   const input = context.requestPayload as InputType;
   const { videoId, userId } = input;
-  const existingVideo = context.run("get-video", async () => {
-    const data = await db
+
+  // 이건 시연목적으로만 사용되고 실제 워크플로우에서는 필요없음
+  const video = await context.run("get-video", async () => {
+    const [existingVideo] = await db
       .select()
       .from(videos)
       .where(and(eq(videos.id, videoId), and(eq(videos.userId, userId))));
 
-    if (!data[0]) {
+    if (!existingVideo) {
       throw new Error("Not found");
     }
 
-    return data[0];
+    return existingVideo;
   });
 
-  console.log({ existingVideo });
-
-  await context.run("first-step", () => {
-    console.log("first step ran");
-  });
-
-  await context.run("second-step", () => {
-    console.log("second step ran");
+  // 이것만 있어도 된다
+  await context.run("update-video", async () => {
+    await db
+      .update(videos)
+      .set({ title: "Updated from background job" })
+      .where(
+        and(eq(videos.id, video.id), and(eq(videos.userId, video.userId)))
+      );
   });
 });
