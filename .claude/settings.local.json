@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx drizzle-kit:*)"
+      "Bash(npx drizzle-kit:*)",
+      "Bash(printf:*)",
+      "Bash(\"c:\\project\\our-tube-next\\docs\\IMPLEMENTATION_DETAILS.md\")"
     ],
     "deny": [],
     "ask": []
