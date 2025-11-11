@@ -1,0 +1,13 @@
+# Demo GIFs
+This directory contains demo GIF files for the README.
+
+## File naming convention:
+- demo-upload-video.gif
+- demo-browse-videos.gif
+- demo-ai-title-generation.gif
+
+## GIF specifications:
+- Max file size: 10MB per GIF
+- Recommended dimensions: 1280x720 or 1024x768
+- Frame rate: 10-15 fps
+- Duration: 10-20 seconds per demo

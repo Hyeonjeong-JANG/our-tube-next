@@ -34,6 +34,29 @@
 
 OurTube는 YouTube를 모델로 한 풀스택 비디오 스트리밍 플랫폼입니다. **T3 Stack**(Next.js, TypeScript, tRPC)을 기반으로 하며, 현대적인 웹 기술과 최신 베스트 프랙티스를 적용하여 개발되었습니다.
 
+### 🎥 데모
+
+<details>
+<summary>📹 비디오 업로드</summary>
+
+![비디오 업로드 데모](assets/demos/demo-upload-video.gif)
+
+</details>
+
+<details>
+<summary>🔍 비디오 탐색</summary>
+
+![비디오 탐색 데모](assets/demos/demo-browse-videos.gif)
+
+</details>
+
+<details>
+<summary>🖼️ 썸네일 변경</summary>
+
+![썸네일 변경 데모](assets/demos/demo-change-thumbnail.gif)
+
+</details>
+
 ### 왜 이 프로젝트를 만들었나요?
 
 - 📚 **학습 목적**: T3 Stack과 풀스택 개발 실습
@@ -62,6 +85,74 @@ OurTube는 YouTube를 모델로 한 풀스택 비디오 스트리밍 플랫폼�
 - 🔐 **사용자 인증** - Clerk를 통한 안전한 인증 시스템
 - ⚡ **Rate Limiting** - API 요청 제한으로 서비스 보호
 - 📱 **반응형 디자인** - 모든 디바이스에서 최적화된 경험
+
+---
+
+## 🏗️ 아키텍처
+
+### 시스템 구조
+
+```mermaid
+graph TB
+    subgraph "클라이언트"
+        Browser[🌐 브라우저]
+        MuxUploader[📤 Mux Uploader]
+    end
+
+    subgraph "Next.js 애플리케이션"
+        NextApp[⚛️ Next.js 15]
+        tRPC[🔄 tRPC API]
+        Middleware[🔐 Clerk Middleware]
+    end
+
+    subgraph "외부 서비스"
+        Clerk[👤 Clerk<br/>인증]
+        Mux[🎬 Mux<br/>비디오]
+        UploadThing[📁 UploadThing<br/>썸네일]
+        Neon[🗄️ Neon<br/>DB]
+        Upstash[⚡ Upstash<br/>Redis]
+    end
+
+    Browser --> NextApp
+    Browser --> MuxUploader
+    MuxUploader --> Mux
+    NextApp --> Middleware
+    Middleware --> Clerk
+    NextApp --> tRPC
+    tRPC --> Neon
+    tRPC --> Upstash
+    tRPC --> Mux
+    tRPC --> UploadThing
+    Clerk -.웹훅.-> NextApp
+    Mux -.웹훅.-> NextApp
+    Upstash -.웹훅.-> NextApp
+
+    style NextApp fill:#0070f3,color:#fff
+    style tRPC fill:#2596be,color:#fff
+```
+
+### 비디오 업로드 플로우
+
+```mermaid
+sequenceDiagram
+    actor User as 👤 사용자
+    participant UI as 브라우저
+    participant Next as Next.js
+    participant Mux as Mux
+    participant UT as UploadThing
+    participant DB as Database
+
+    User->>UI: Create 클릭
+    UI->>Next: videos.create()
+    Next->>Mux: Upload URL 요청
+    Mux-->>UI: Upload URL
+    UI->>Mux: 비디오 업로드
+    Mux->>Next: 웹훅: asset.ready
+    Next->>UT: 썸네일 저장
+    UT-->>DB: 메타데이터 저장
+```
+
+> 📄 자세한 아키텍처는 [docs/architecture.md](docs/architecture.md)를 참조하세요.
 
 ---
 
